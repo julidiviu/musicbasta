@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block section %}
+<a class="btn btn-primary mb-3" href="{% url 'cancion-update' object.id %}">Edit </a>
+<a class="btn btn-danger mb-3" href="{% url 'cancion-delete' object.id %}">Eliminar </a>
+<h2>Detalles de la Canción</h2>
+<hr>
+{% endblock section %}
+
+{% block maincontent %}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-md-6">
+                <h3 class="panel-title">{{ cancion.titulo }}</h3>
+            </div>
+            <div class="col-md-6">
+                <strong>Puntaje:</strong>
+                <!-- Estrellas -->
+                <span class="star" data-value="1" onclick="highlightStars(1)"><i class="fa fa-star"></i></span>
+                <span class="star" data-value="2" onclick="highlightStars(2)"><i class="fa fa-star"></i></span>
+                <span class="star" data-value="3" onclick="highlightStars(3)"><i class="fa fa-star"></i></span>
+                <span class="star" data-value="4" onclick="highlightStars(4)"><i class="fa fa-star"></i></span>
+                <span class="star" data-value="5" onclick="highlightStars(5)"><i class="fa fa-star"></i></span>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        {% if cancion.imagen %}
+            <img src="{{ cancion.imagen.url }}" style="width:200px; height:200px;" alt="Imagen de {{ cancion.titulo }}" class="img-thumbnail"/>
+        {% endif %}
+        <p><strong>Banda:</strong> {{ cancion.banda.nombre }}</p>
+        <p><strong>Álbum:</strong> {{ cancion.album.titulo }}</p>
+        <p><strong>Duración:</strong> {{ cancion.duracion }}</p>
+        <p><strong>Descripción:</strong> {{ cancion.album.banda.descripcion }}</p>
+
+        <!-- Reproductor de audio -->
+        <audio controls style="width: 100%; margin-top: 10px;">
+            <source src="{{ cancion.audio_file.url }}" type="audio/mpeg">
+            Tu navegador no soporta el reproductor de audio.
+        </audio>
+    </div>
+    <a href="{% url 'cancion-list' %}" class="btn btn-secondary mt-3">Volver a la lista</a>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<script>
+    function highlightStars(rating) {
+        // Obtiene todas las estrellas
+        const stars = document.querySelectorAll('.star');
+
+        // Recorre las estrellas y cambia el color según el valor de `rating`
+        stars.forEach((star, index) => {
+            if (index < rating) {
+                star.querySelector('i').style.color = 'orange'; // Cambia el color a amarillo
+            } else {
+                star.querySelector('i').style.color = 'gray'; // Cambia el color a gris para las no seleccionadas
+            }
+        });
+    }
+</script>
+
+<style>
+    .star i {
+        color: gray; /* Color inicial de las estrellas */
+        cursor: pointer; /* Indica que las estrellas son clickeables */
+    }
+</style>
+{% endblock maincontent %}

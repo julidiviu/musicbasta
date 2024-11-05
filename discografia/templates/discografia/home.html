@@ -1,0 +1,39 @@
+
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block section %}
+    <h2>Bienvenido a la Discografía</h2>
+    <hr>
+    <p>Explora las colecciones de álbumes y canciones de las bandas más icónicas. Sumérgete en el mundo de la música y descubre nuevos sonidos y clásicos inolvidables.</p>
+  
+{% endblock section %}
+
+{% block maincontent %}
+    <!-- Hero Section with background image -->
+
+    <!-- Información adicional o características -->
+    <div class="container text-center mt-5">
+        <h3 class="mb-4">Explora el Mundo de la Música</h3>
+        <p>Descubre las mejores bandas, los álbumes más destacados, y las canciones que han marcado generaciones. Nuestra discografía es el lugar perfecto para los amantes de la música.</p>
+        
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <img src="{% static 'images/icono-bandas.png' %}" alt="Bandas" class="mb-3" style="width: 50px;">
+                <h5>Bandas Icónicas como mcr</h5>
+                <p>Explora las biografías y discografías de las bandas más influyentes de la historia.</p>
+            </div>
+            <div class="col-md-4">
+                <img src="{% static 'images/icono-albumes.png' %}" alt="Álbumes" class="mb-3" style="width: 50px;">
+                <h5>Álbumes Clásicos</h5>
+                <p>Sumérgete en los álbumes que definieron épocas y generaron nuevos movimientos musicales.</p>
+            </div>
+            <div class="col-md-4">
+                <img src="{% static 'images/icono-canciones.png' %}" alt="Canciones" class="mb-3" style="width: 50px;">
+                <h5>Canciones Memorables</h5>
+                <p>Reencuéntrate con las canciones que dejaron huella en la historia de la música.</p>
+            </div>
+        </div>
+    </div>
+{% endblock maincontent %}

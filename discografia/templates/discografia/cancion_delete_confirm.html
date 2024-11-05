@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block maincontent %}
+
+<form action="" method="post">{% csrf_token %}
+<p> Está seguro de eliminar la canción: {{ object.name }} ? </p>
+<input type="submit" value="Confirm" />
+<a href="{% url "cancion-list" %}">Cancel</a>
+</form>
+{% endblock maincontent %}

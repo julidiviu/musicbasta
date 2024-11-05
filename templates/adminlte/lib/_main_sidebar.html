@@ -1,0 +1,82 @@
+{% load static %}
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <br>
+    <br>
+    <a href="/" class="brand-link">
+        <img src="{% static 'admin-lte/dist/img/Spotify.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-bold" style="font-size: 1.25rem;">Yfitops</span>
+
+    </a>
+
+    <div class="sidebar">
+        <!-- Sidebar user panel -->
+        <br>
+        
+
+        <!-- Navigation menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Banda Section -->
+                <li class="nav-item has-tree-view">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-guitar"></i>
+                        <p>Banda<i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{% url 'banda-list' %}" class="nav-link">
+                                <i class="nav-icon fas fa-list"></i> Listar Bandas
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'banda-create' %}" class="nav-link">
+                                <i class="nav-icon fas fa-plus"></i> Crear Banda
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Album Section -->
+                <li class="nav-item has-tree-view">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-compact-disc"></i>
+                        <p>Álbum<i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{% url 'album-list' %}" class="nav-link">
+                                <i class="nav-icon fas fa-list"></i> Listar Álbumes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'album-create' %}" class="nav-link">
+                                <i class="nav-icon fas fa-plus"></i> Crear Álbum
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Cancion Section -->
+                <li class="nav-item has-tree-view">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-music"></i>
+                        <p>Canción<i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{% url 'cancion-list' %}" class="nav-link">
+                                <i class="nav-icon fas fa-list"></i> Listar Canciones
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'cancion-create' %}" class="nav-link">
+                                <i class="nav-icon fas fa-plus"></i> Crear Canción
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</aside>

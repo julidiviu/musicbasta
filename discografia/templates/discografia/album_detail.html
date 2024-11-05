@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block section %}
+<a class="btn btn-primary mb-3" href="{% url 'album-update' object.id %}">Edit </a>
+<a class="btn btn-danger mb-3" href="{% url 'album-delete' object.id %}">Eliminar </a>
+    <h2>Detalles del Álbum: {{ album.titulo }}</h2>
+    <hr>
+{% endblock section %}
+
+{% block maincontent %}
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Portada del álbum -->
+            {% if album.portada %}
+                <img src="{{ album.portada.url }}" class="img-fluid" alt="Portada de {{ album.titulo }}">
+            {% else %}
+                <img src="{% static 'default_album_image.jpg' %}" class="img-fluid" alt="Imagen por defecto">
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+            <p><strong>Banda:</strong> <a href="{% url 'banda-detail' album.banda.id %}">{{ album.banda.nombre }}</a></p>
+            <p><strong>Fecha de lanzamiento:</strong> {{ album.fecha_lanzamiento }}</p>
+            <hr>
+            <h3>Canciones</h3>
+            <ul>
+                {% for cancion in album.canciones.all %}
+                    <li>
+                        <a href="{% url 'cancion-detail' cancion.id %}">{{ cancion.titulo }}</a> - {{ cancion.duracion }}
+                    </li>
+                {% empty %}
+                    <li>No hay canciones en este álbum.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock maincontent %}

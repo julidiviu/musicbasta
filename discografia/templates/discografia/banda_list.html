@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block section %}
+    <h2>Lista de Bandas</h2>
+    <hr>
+    <!-- Barra de búsqueda para bandas -->
+    <form method="GET" action="{% url 'banda-list' %}" class="form-inline">
+        <div class="input-group mb-3">
+            <input type="text" name="q" class="form-control" placeholder="Buscar banda..." aria-label="Buscar banda" aria-describedby="button-addon2" value="{{ request.GET.q }}">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit" id="button-addon2">Buscar</button>
+            </div>
+        </div>
+    </form>
+{% endblock section %}
+
+{% block maincontent %}
+    <div class="row">
+        {% for banda in object_list %}
+            <div class="col-md-4 col-lg-3 mb-4">
+                <div class="card h-100 text-white bg-dark">
+                    <img src="{{ banda.foto.url }}" class="card-img-top" alt="{{ banda.nombre }}">
+                    <div class="card-body">
+                        <h5 class="card-title" style="font-size: 1.5rem; font-weight: bold;">{{ banda.nombre }}</h5>
+                        <p class="card-text">{{ banda.descripcion|truncatewords:15 }}</p>
+                        <a href="{% url 'banda-detail' banda.id %}" class="btn btn-primary">Ver Detalles</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12 text-center">
+                <p>No se encontraron bandas.</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock maincontent %}

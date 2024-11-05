@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block section %}
+<h2>{% if form.instance.pk %}Editar Canción: {{ form.instance.titulo }}{% else %}Agregar Nueva Canción{% endif %}</h2>
+<hr>
+{% endblock section %}
+
+{% block maincontent %}
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header bg-primary text-white">
+      <h3 class="mb-0">
+        {% if form.instance.pk %}Editar{% else %}Nueva{% endif %} Canción
+      </h3>
+    </div>
+    <div class="card-body">
+      <form method="post" enctype="multipart/form-data" class="form-horizontal">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="{{ form.titulo.id_for_label }}" class="form-label">Título</label>
+              {{ form.titulo.errors }}
+              {{ form.titulo }}
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="{{ form.album.id_for_label }}" class="form-label">Álbum</label>
+              {{ form.album.errors }}
+              {{ form.album }}
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="{{ form.banda.id_for_label }}" class="form-label">Banda</label>
+              {{ form.banda.errors }}
+              {{ form.banda }}
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="{{ form.genero.id_for_label }}" class="form-label">Género</label>
+              {{ form.genero.errors }}
+              {{ form.genero }}
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="{{ form.audio_file.id_for_label }}" class="form-label">Archivo de Audio</label>
+              {{ form.audio_file.errors }}
+              {{ form.audio_file }}
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="{{ form.imagen.id_for_label }}" class="form-label">Imagen (opcional)</label>
+              {{ form.imagen.errors }}
+              {{ form.imagen }}
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 text-center">
+          <button type="submit" class="btn btn-primary btn-lg">
+            <i class="fas fa-save"></i> Guardar Canción
+          </button>
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock maincontent %}
