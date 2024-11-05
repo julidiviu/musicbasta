@@ -20,13 +20,15 @@
     <div class="row">
         {% for album in object_list %}
             <div class="col-md-4 col-lg-3 mb-4">
-                <div class="card h-100 text-white" style="background-color: #131614;">
-                    <img src="{{ album.portada.url }}" class="card-img-top" alt="Imagen de {{ album.titulo }}">
+                <div class="card album-card h-100 text-white">
+                    <div class="album-image">
+                        <img src="{{ album.portada.url }}" class="card-img-top" alt="Imagen de {{ album.titulo }}">
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ album.titulo }}</h5>
                         <p class="card-text">Banda: {{ album.banda.nombre }}</p>
                         <p class="card-text">Fecha de Lanzamiento: {{ album.fecha_lanzamiento }}</p>
-                        <a href="{% url 'album-detail' album.id %}" class="btn btn-primary">Ver detalles</a>
+                        <a href="{% url 'album-detail' album.id %}" class="btn view-details-btn">Ver detalles</a>
                     </div>
                 </div>
             </div>
@@ -34,4 +36,52 @@
             <p class="text-center">No se encontraron álbumes.</p>
         {% endfor %}
     </div>
+
+    <style>
+        .album-card {
+            background-color: #131614;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .album-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        .album-image {
+            height: 200px;
+            background: #f5f5f5;
+        }
+
+        .album-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .album-card:hover .album-image img {
+            transform: scale(1.1);
+        }
+
+        .view-details-btn {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            background-color: rgb(0, 123, 255);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        .view-details-btn:hover {
+            background-color: rgb(8, 102, 202);
+            color: white;
+        }
+    </style>
 {% endblock maincontent %}

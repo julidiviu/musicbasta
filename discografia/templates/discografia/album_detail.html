@@ -3,36 +3,155 @@
 {% load static %}
 
 {% block section %}
-<a class="btn btn-primary mb-3" href="{% url 'album-update' object.id %}">Edit </a>
-<a class="btn btn-danger mb-3" href="{% url 'album-delete' object.id %}">Eliminar </a>
-    <h2>Detalles del Álbum: {{ album.titulo }}</h2>
+<div class="album-header">
+
+    <h2 class="album-title" style="font-size: 2.5rem;">Detalles del Álbum: {{ album.titulo }}</h2>
     <hr>
+</div>
 {% endblock section %}
 
 {% block maincontent %}
-    <div class="row">
-        <div class="col-md-4">
+<div class="album-detail-container">
+    <div class="album-detail-grid">
+        <div class="album-image-section">
             <!-- Portada del álbum -->
-            {% if album.portada %}
-                <img src="{{ album.portada.url }}" class="img-fluid" alt="Portada de {{ album.titulo }}">
-            {% else %}
-                <img src="{% static 'default_album_image.jpg' %}" class="img-fluid" alt="Imagen por defecto">
-            {% endif %}
+            <div class="card h-100 text-white bg-dark album-card">
+                {% if album.portada %}
+                    <img src="{{ album.portada.url }}" class="card-img-top album-detail-image" alt="Portada de {{ album.titulo }}">
+                {% else %}
+                    <img src="{% static 'default_album_image.jpg' %}" class="card-img-top album-detail-image" alt="Imagen por defecto">
+                {% endif %}
+            </div>
         </div>
-        <div class="col-md-8">
-            <p><strong>Banda:</strong> <a href="{% url 'banda-detail' album.banda.id %}">{{ album.banda.nombre }}</a></p>
-            <p><strong>Fecha de lanzamiento:</strong> {{ album.fecha_lanzamiento }}</p>
-            <hr>
-            <h3>Canciones</h3>
-            <ul>
-                {% for cancion in album.canciones.all %}
-                    <li>
-                        <a href="{% url 'cancion-detail' cancion.id %}">{{ cancion.titulo }}</a> - {{ cancion.duracion }}
-                    </li>
-                {% empty %}
-                    <li>No hay canciones en este álbum.</li>
-                {% endfor %}
-            </ul>
+        
+        <div class="album-info-section">
+            <div class="info-card">
+                <p><strong>Banda:</strong> <a href="{% url 'banda-detail' album.banda.id %}">{{ album.banda.nombre }}</a></p>
+                <p><strong>Fecha de lanzamiento:</strong> {{ album.fecha_lanzamiento }}</p>
+                <hr>
+                
+                <h3 class="info-title">Canciones</h3>
+                <ul class="song-list">
+                    {% for cancion in album.canciones.all %}
+                        <li class="song-item">
+                            <a href="{% url 'cancion-detail' cancion.id %}" class="song-title">{{ cancion.titulo }}</a> - {{ cancion.duracion }}
+                        </li>
+                    {% empty %}
+                        <li>No hay canciones en este álbum.</li>
+                    {% endfor %}
+                    <br>
+                    <a href="{% url 'album-update' album.id %}" class="edit-button">Editar</a>
+                    <a href="{% url 'album-delete' album.id %}" class="delete-button">Eliminar</a>
+                </ul>
+            </div>
         </div>
     </div>
+</div>
+
+<style>
+    .album-detail-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .album-detail-grid {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 2rem;
+        align-items: start;
+    }
+
+    .album-image-section {
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .album-detail-image {
+        width: 100%;
+        height: auto;
+        transition: transform 0.5s ease;
+    }
+
+    .album-image-section:hover .album-detail-image {
+        transform: scale(1.05);
+    }
+
+    .info-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .album-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .edit-button,
+    .delete-button {
+        padding: 0.5rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+    .edit-button {
+        background-color: rgb(0, 123, 255);
+    }
+
+    .edit-button:hover {
+        background-color: rgb(8, 102, 202);
+        color: white;
+    }
+
+    .delete-button {
+        background-color: #dc3545;
+    }
+
+    .delete-button:hover {
+        background-color: #c82333;
+        color: white;
+    }
+
+    .song-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .song-item {
+        margin-bottom: 0.5rem;
+    }
+
+    .song-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #333;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .song-title:hover {
+        color: #e82127;
+    }
+
+    @media (max-width: 992px) {
+        .album-detail-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .edit-button,
+        .delete-button {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+    }
+</style>
 {% endblock maincontent %}
