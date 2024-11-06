@@ -3,70 +3,138 @@
 {% load static %}
 
 {% block section %}
-<a class="btn btn-primary mb-3" href="{% url 'cancion-update' object.id %}">Edit </a>
-<a class="btn btn-danger mb-3" href="{% url 'cancion-delete' object.id %}">Eliminar </a>
-<h2>Detalles de la Canción</h2>
+<h2 class="text-center text-primary font-weight-bold display-4">Detalles de la Canción</h2>
 <hr>
 {% endblock section %}
 
 {% block maincontent %}
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <div class="row">
-            <div class="col-md-6">
-                <h3 class="panel-title">{{ cancion.titulo }}</h3>
-            </div>
-            <div class="col-md-6">
-                <strong>Puntaje:</strong>
-                <!-- Estrellas -->
-                <span class="star" data-value="1" onclick="highlightStars(1)"><i class="fa fa-star"></i></span>
-                <span class="star" data-value="2" onclick="highlightStars(2)"><i class="fa fa-star"></i></span>
-                <span class="star" data-value="3" onclick="highlightStars(3)"><i class="fa fa-star"></i></span>
-                <span class="star" data-value="4" onclick="highlightStars(4)"><i class="fa fa-star"></i></span>
-                <span class="star" data-value="5" onclick="highlightStars(5)"><i class="fa fa-star"></i></span>
+<div class="card shadow-lg border-0">
+    <div class="card-header bg-dark text-white">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3 class="mb-0 font-weight-bold">{{ cancion.titulo }}</h3>
+            <div>
+                <strong class="mr-2">Puntaje:</strong>
+                {% for star in "12345" %}
+                    <span class="star" data-value="{{ forloop.counter }}" onclick="highlightStars({{ forloop.counter }})">
+                        <i class="fa fa-star"></i>
+                    </span>
+                {% endfor %}
             </div>
         </div>
     </div>
-    <div class="panel-body">
+    <div class="card-body bg-light">
         {% if cancion.imagen %}
-            <img src="{{ cancion.imagen.url }}" style="width:200px; height:200px;" alt="Imagen de {{ cancion.titulo }}" class="img-thumbnail"/>
+            <div class="text-center mb-3">
+                <img src="{{ cancion.imagen.url }}" class="img-fluid img-thumbnail rounded-circle" alt="Imagen de {{ cancion.titulo }}" style="max-width: 200px;">
+            </div>
         {% endif %}
-        <p><strong>Banda:</strong> {{ cancion.banda.nombre }}</p>
-        <p><strong>Álbum:</strong> {{ cancion.album.titulo }}</p>
-        <p><strong>Duración:</strong> {{ cancion.duracion }}</p>
-        <p><strong>Descripción:</strong> {{ cancion.album.banda.descripcion }}</p>
+        <p><strong class="text-dark">Banda:</strong> {{ cancion.banda.nombre }}</p>
+        <p><strong class="text-dark">Álbum:</strong> {{ cancion.album.titulo }}</p>
+        <p><strong class="text-dark">Duración:</strong> {{ cancion.duracion }}</p>
+        <p><strong class="text-dark">Descripción:</strong> {{ cancion.album.banda.descripcion }}</p>
 
         <!-- Reproductor de audio -->
-        <audio controls style="width: 100%; margin-top: 10px;">
+        <audio controls class="w-100 mt-3">
             <source src="{{ cancion.audio_file.url }}" type="audio/mpeg">
             Tu navegador no soporta el reproductor de audio.
         </audio>
     </div>
-    <a href="{% url 'cancion-list' %}" class="btn btn-secondary mt-3">Volver a la lista</a>
+
+    <!-- Botones alineados al centro y con espaciado -->
+    <div class="card-footer text-center bg-dark">
+        <div class="d-flex justify-content-center flex-wrap gap-2 mt-3">
+            <a class="btn btn-warning btn-lg shadow mx-2" href="{% url 'cancion-update' object.id %}">
+                <i class="fas fa-edit"></i> Editar
+            </a>
+            <a class="btn btn-danger btn-lg shadow mx-2" href="{% url 'cancion-delete' object.id %}">
+                <i class="fas fa-trash-alt"></i> Eliminar
+            </a>
+            <a href="{% url 'cancion-list' %}" class="btn btn-secondary btn-lg shadow mx-2">
+                <i class="fas fa-arrow-left"></i> Volver a la lista
+            </a>
+        </div>
+    </div>
 </div>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <script>
     function highlightStars(rating) {
-        // Obtiene todas las estrellas
         const stars = document.querySelectorAll('.star');
-
-        // Recorre las estrellas y cambia el color según el valor de `rating`
         stars.forEach((star, index) => {
-            if (index < rating) {
-                star.querySelector('i').style.color = 'orange'; // Cambia el color a amarillo
-            } else {
-                star.querySelector('i').style.color = 'gray'; // Cambia el color a gris para las no seleccionadas
-            }
+            star.querySelector('i').style.color = index < rating ? '#FFD700' : 'gray';
         });
     }
 </script>
 
 <style>
+    .btn-lg {
+        font-size: 1.25rem;
+        padding: 0.75rem 1.5rem;
+        transition: all 0.3s ease-in-out;
+    }
+    .btn-warning {
+        background-color: #ffc107;
+        border-color: #ffc107;
+        color: #fff;
+    }
+    .btn-warning:hover {
+        background-color: #e0a800;
+        border-color: #d39e00;
+    }
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        color: #fff;
+    }
+    .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+        color: #fff;
+    }
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #545b62;
+    }
+    .btn-lg:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
     .star i {
-        color: gray; /* Color inicial de las estrellas */
-        cursor: pointer; /* Indica que las estrellas son clickeables */
+        font-size: 1.5rem;
+        color: gray;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+    .star:hover i {
+        color: #FFD700;
+    }
+    .card {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    .card-header {
+        font-size: 1.25rem;
+    }
+    .card-body {
+        font-size: 1rem;
+        color: #333;
+    }
+    .card-footer {
+        font-size: 1rem;
+        border-top: 0;
+    }
+    .text-primary {
+        color: #1e90ff !important;
+    }
+    .display-4 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
     }
 </style>
 {% endblock maincontent %}

@@ -3,85 +3,113 @@
 {% load static %}
 
 {% block section %}
-    <h2>Lista de Álbumes</h2>
-    <hr>
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h3 class="info-title text-primary font-weight-bold">Lista de Álbumes</h3>
+    
     <!-- Barra de búsqueda para álbumes -->
-    <form method="GET" action="{% url 'album-list' %}" class="form-inline">
-        <div class="input-group mb-3">
-            <input type="text" name="q" class="form-control" placeholder="Buscar álbum..." aria-label="Buscar álbum" aria-describedby="button-addon2" value="{{ request.GET.q }}">
+    <form method="GET" action="{% url 'album-list' %}" class="form-inline d-flex">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control shadow-sm" placeholder="Buscar álbum..." aria-label="Buscar álbum" aria-describedby="button-addon2" value="{{ request.GET.q }}">
             <div class="input-group-append">
-                <button class="btn btn-primary" type="submit" id="button-addon2">Buscar</button>
+                <button class="btn btn-primary shadow" type="submit" id="button-addon2">Buscar</button>
             </div>
         </div>
     </form>
+</div>
+<hr>
 {% endblock section %}
 
 {% block maincontent %}
-    <div class="row">
-        {% for album in object_list %}
-            <div class="col-md-4 col-lg-3 mb-4">
-                <div class="card album-card h-100 text-white">
-                    <div class="album-image">
-                        <img src="{{ album.portada.url }}" class="card-img-top" alt="Imagen de {{ album.titulo }}">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ album.titulo }}</h5>
-                        <p class="card-text">Banda: {{ album.banda.nombre }}</p>
-                        <p class="card-text">Fecha de Lanzamiento: {{ album.fecha_lanzamiento }}</p>
-                        <a href="{% url 'album-detail' album.id %}" class="btn view-details-btn">Ver detalles</a>
-                    </div>
+<div class="row">
+    {% for album in object_list %}
+        <div class="col-md-4 col-lg-3 mb-4">
+            <div class="card album-card h-100 text-white">
+                <div class="album-image">
+                    <img src="{{ album.portada.url }}" class="card-img-top rounded-top" alt="Imagen de {{ album.titulo }}">
+                </div>
+                <div class="card-body bg-dark text-center">
+                    <h5 class="card-title font-weight-bold text-light">{{ album.titulo }}</h5>
+                    <p class="card-text text-light">Banda: {{ album.banda.nombre }}</p>
+                    <p class="card-text text-light">Fecha de Lanzamiento: {{ album.fecha_lanzamiento }}</p>
+                    <a href="{% url 'album-detail' album.id %}" class="btn view-details-btn">Ver Detalles</a>
                 </div>
             </div>
-        {% empty %}
-            <p class="text-center">No se encontraron álbumes.</p>
-        {% endfor %}
-    </div>
+        </div>
+    {% empty %}
+        <div class="col-12 text-center">
+            <p class="text-muted">No se encontraron álbumes.</p>
+        </div>
+    {% endfor %}
+</div>
 
-    <style>
-        .album-card {
-            background-color: #131614;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+<style>
+    /* Estilos de la tarjeta de álbum */
+    .album-card {
+        background-color: #1c1c1c;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-        .album-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-        }
+    .album-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    }
 
-        .album-image {
-            height: 200px;
-            background: #f5f5f5;
-        }
+    .album-image {
+        height: 200px;
+        background: #f5f5f5;
+    }
 
-        .album-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
+    .album-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
 
-        .album-card:hover .album-image img {
-            transform: scale(1.1);
-        }
+    .album-card:hover .album-image img {
+        transform: scale(1.1);
+    }
 
-        .view-details-btn {
-            display: block;
-            width: 100%;
-            padding: 0.8rem;
-            background-color: rgb(0, 123, 255);
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 6px;
-            transition: background-color 0.3s ease;
-        }
+    /* Estilos del botón de detalles */
+    .view-details-btn {
+        display: block;
+        width: 100%;
+        padding: 0.8rem;
+        background-color: #007bff;
+        color: white;
+        text-align: center;
+        border-radius: 8px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
 
-        .view-details-btn:hover {
-            background-color: rgb(8, 102, 202);
-            color: white;
-        }
-    </style>
+    .view-details-btn:hover {
+        background-color: #0056b3;
+        color: white;
+    }
+
+    /* Estilos de la barra de búsqueda */
+    .form-control {
+        border-radius: 8px 0 0 8px;
+        border-right: none;
+    }
+
+    .input-group-append .btn-primary {
+        border-radius: 0 8px 8px 0;
+        background-color: #1e90ff;
+        border: none;
+    }
+
+    /* Estilos del título */
+    .info-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1e90ff;
+        margin: 0;
+    }
+</style>
 {% endblock maincontent %}
