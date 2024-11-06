@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.db.models import Count
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from discografia.models import Cancion
 from discografia.models import Banda
@@ -117,3 +118,21 @@ class AlbumDelete(DeleteView):
 class CancionDelete(DeleteView):
     model = Cancion
     success_url = reverse_lazy('cancion-list')
+    
+def estadisticas(request):
+    # Calcular el total de bandas, álbumes y canciones
+    total_bandas = Banda.objects.count()
+    total_albumes = Album.objects.count()
+    total_canciones = Cancion.objects.count()
+
+    # Calcular el número de canciones por género
+    canciones_por_genero = Cancion.objects.values('genero').annotate(total=Count('id'))
+
+    context = {
+        'total_bandas': total_bandas,
+        'total_albumes': total_albumes,
+        'total_canciones': total_canciones,
+        'canciones_por_genero': list(canciones_por_genero),  # Convertir a lista para JavaScript
+    }
+
+    return render(request, 'discografia/estadisticas.html', context)

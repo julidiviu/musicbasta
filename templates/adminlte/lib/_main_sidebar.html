@@ -6,17 +6,16 @@
     <a href="/" class="brand-link">
         <img src="{% static 'Spotify.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-bold" style="font-size: 1.25rem;">Yfitops</span>
-
     </a>
 
     <div class="sidebar">
         <!-- Sidebar user panel -->
         <br>
-        
 
         <!-- Navigation menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                
                 <!-- Banda Section -->
                 <li class="nav-item has-tree-view">
                     <a href="#" class="nav-link">
@@ -75,6 +74,14 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+
+                <!-- Estadísticas Section -->
+                <li class="nav-item">
+                    <a href="{% url 'estadisticas' %}" class="nav-link">
+                        <i class="nav-icon fas fa-chart-bar"></i>
+                        <p>Estadísticas</p>
+                    </a>
                 </li>
             </ul>
         </nav>

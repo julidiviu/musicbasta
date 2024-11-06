@@ -38,4 +38,5 @@ urlpatterns = [
     path('banda/<int:pk>/delete',views.BandaDelete.as_view(), name='banda-delete'),
     path('album/<int:pk>/delete',views.AlbumDelete.as_view(), name='album-delete'),
     path('cancion/<int:pk>/delete',views.CancionDelete.as_view(), name='cancion-delete'),
+    path('estadisticas/', views.estadisticas, name='estadisticas'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block section %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h3 class="info-title text-primary font-weight-bold">Estadísticas de la Discografía</h3>
+</div>
+<hr>
+{% endblock section %}
+
+{% block maincontent %}
+    <!-- Estilos para ajustar el tamaño de las gráficas -->
+    <style>
+        .chart-container {
+            width: 400px; /* Ajusta el ancho del contenedor de la gráfica */
+            margin: 0 auto; /* Centra el contenedor */
+        }
+        .chart-container canvas {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+
+    <!-- Contenedor de las gráficas -->
+    <div class="container">
+        <!-- Gráfica de Resumen de Estadísticas -->
+        <div class="row mb-5">
+            <div class="col-md-12 text-center">
+                <h4>Resumen de Estadísticas</h4>
+                <div class="chart-container">
+                    <canvas id="resumenEstadisticasChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráfica de Canciones por Género -->
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h4>Gráfica de Canciones por Género</h4>
+                <div class="chart-container">
+                    <canvas id="cancionesPorGeneroChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script para las gráficas usando Chart.js y el plugin de Data Labels -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script>
+        // Datos para la gráfica de Resumen de Estadísticas
+        const resumenLabels = ['Bandas', 'Álbumes', 'Canciones'];
+        const resumenData = [{{ total_bandas }}, {{ total_albumes }}, {{ total_canciones }}];
+
+        // Configuración de la gráfica de Resumen de Estadísticas
+        const ctxResumen = document.getElementById('resumenEstadisticasChart').getContext('2d');
+        new Chart(ctxResumen, {
+            type: 'pie',
+            data: {
+                labels: resumenLabels,
+                datasets: [{
+                    label: 'Total',
+                    data: resumenData,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false, // Desactiva la opción responsive
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.raw || 0;
+                                return `${label}: ${value}`;
+                            }
+                        }
+                    },
+                    datalabels: {
+                        color: '#000',
+                        font: {
+                            weight: 'bold'
+                        },
+                        formatter: (value, context) => `${value}`
+                    }
+                }
+            },
+            plugins: [ChartDataLabels]
+        });
+
+        // Datos para la gráfica de Canciones por Género
+        const cancionesPorGenero = {{ canciones_por_genero|safe }};
+        const generos = cancionesPorGenero.map(item => item.genero);
+        const cantidadesGenero = cancionesPorGenero.map(item => item.total);
+
+        // Configuración de la gráfica de Canciones por Género
+        const ctxGenero = document.getElementById('cancionesPorGeneroChart').getContext('2d');
+        new Chart(ctxGenero, {
+            type: 'bar',
+            data: {
+                labels: generos,
+                datasets: [{
+                    label: 'Número de Canciones',
+                    data: cantidadesGenero,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false, // Desactiva la opción responsive
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+{% endblock maincontent %}
