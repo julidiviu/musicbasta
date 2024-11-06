@@ -1,39 +1,99 @@
-
 {% extends 'base.html' %}
 
 {% load static %}
 
 {% block section %}
-    <h2>Bienvenido a la Discografía</h2>
-    <hr>
+<div class="card-header bg-dark text-white text-center py-5">
+    <h2 class="mb-0">Bienvenido a la Yfitops</h2>
+    <hr class="bg-primary w-50 mx-auto">
     <p>Explora las colecciones de álbumes y canciones de las bandas más icónicas. Sumérgete en el mundo de la música y descubre nuevos sonidos y clásicos inolvidables.</p>
-  
+</div>
 {% endblock section %}
 
 {% block maincontent %}
-    <!-- Hero Section with background image -->
+<div class="container text-center mt-5">
 
-    <!-- Información adicional o características -->
-    <div class="container text-center mt-5">
-        <h3 class="mb-4">Explora el Mundo de la Música</h3>
-        <p>Descubre las mejores bandas, los álbumes más destacados, y las canciones que han marcado generaciones. Nuestra discografía es el lugar perfecto para los amantes de la música.</p>
-        
-        <div class="row mt-4">
-            <div class="col-md-4">
-                <img src="{% static 'images/icono-bandas.png' %}" alt="Bandas" class="mb-3" style="width: 50px;">
-                <h5>Bandas Icónicas como mcr</h5>
-                <p>Explora las biografías y discografías de las bandas más influyentes de la historia.</p>
+    <!-- Tarjetas de Información -->
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="card info-card h-100 shadow-sm border-0 rounded-lg">
+                <div class="card-body text-center">
+                    <h5 class="card-title"></h5>
+                    <p class="font-weight-bold text-center">Bandas Icónicas</p>
+                    <!-- Enlace en la imagen para redirigir a banda-list -->
+                    <a href="{% url 'banda-list' %}">
+                        <img src="{% static 'bandas.png' %}" alt="Bandas" class="mb-3 icono" style="width: 200px;">
+                    </a>
+                    <p class="card-text">Explora las biografías y discografías de las bandas más influyentes de la historia.</p>
+                </div>
             </div>
-            <div class="col-md-4">
-                <img src="{% static 'images/icono-albumes.png' %}" alt="Álbumes" class="mb-3" style="width: 50px;">
-                <h5>Álbumes Clásicos</h5>
-                <p>Sumérgete en los álbumes que definieron épocas y generaron nuevos movimientos musicales.</p>
+        </div>
+        <div class="col-md-4">
+            <div class="card info-card h-100 shadow-sm border-0 rounded-lg">
+                <div class="card-body text-center">
+                    <h5 class="card-title"></h5>
+                    <p class="font-weight-bold text-center">Álbumes Clásicos</p>
+                    <!-- Enlace en la imagen para redirigir a banda-list -->
+                    <a href="{% url 'album-list' %}">
+                        <img src="{% static 'albums.png' %}" alt="albums" class="mb-3 icono" style="width: 200px;">
+                    </a>
+                    <p class="card-text">Sumérgete en los álbumes que definieron épocas y generaron nuevos movimientos musicales.</p>
+                </div>
             </div>
-            <div class="col-md-4">
-                <img src="{% static 'images/icono-canciones.png' %}" alt="Canciones" class="mb-3" style="width: 50px;">
-                <h5>Canciones Memorables</h5>
-                <p>Reencuéntrate con las canciones que dejaron huella en la historia de la música.</p>
+        </div>
+        <div class="col-md-4">
+            <div class="card info-card h-100 shadow-sm border-0 rounded-lg">
+                <div class="card-body text-center">
+                    <h5 class="card-title"></h5>
+                    <p class="font-weight-bold text-center">Canciones Memorables</p>
+                    <!-- Enlace en la imagen para redirigir a banda-list -->
+                    <a href="{% url 'cancion-list' %}">
+                        <img src="{% static 'cancion.png' %}" alt="albums" class="mb-3 icono" style="width: 200px;">
+                    </a>
+                    <p class="card-text">Reencuéntrate con las canciones que dejaron huella en la historia de la música.</p>
+                </div>
             </div>
         </div>
     </div>
+</div>
+
+<!-- CSS personalizado -->
+<style>
+
+    /* Tarjetas de información */
+    .info-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .info-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Iconos de la tarjeta */
+    .icono {
+        transition: transform 0.3s ease;
+        width: 500px; /* Tamaño más grande de la imagen */
+        height: auto;
+    }
+
+    .info-card:hover .icono {
+        transform: scale(1.2);
+    }
+
+    /* Título de la sección */
+    .hero-section h3 {
+        font-size: 2rem;
+        color: #1e90ff;
+    }
+
+    /* Estilos de los textos y botones */
+    .text-primary {
+        color: #1e90ff !important;
+    }
+
+    .text-muted {
+        color: #6c757d !important;
+    }
+</style>
 {% endblock maincontent %}

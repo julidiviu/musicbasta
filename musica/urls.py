@@ -22,7 +22,7 @@ from discografia import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/', views.discografia_home, name='discografia_home'),
+    path('', views.discografia_home, name='discografia_home'),
     path('cancion/',views.CancionListView.as_view(),name='cancion-list'),
     path('cancion/<int:pk>/detail/',views.CancionDetailView.as_view(),name='cancion-detail'),
     path('banda/',views.BandaListView.as_view(),name='banda-list'),

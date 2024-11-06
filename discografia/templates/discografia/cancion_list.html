@@ -3,17 +3,19 @@
 {% load static %}
 
 {% block section %}
-    <h2>Lista de Canciones</h2>
-    <hr>
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h3 class="info-title text-primary font-weight-bold">Lista de Canciones</h3>
     <!-- Barra de búsqueda -->
-    <form method="GET" action="{% url 'cancion-list' %}" class="form-inline">
-        <div class="input-group mb-3">
-            <input type="text" name="q" class="form-control" placeholder="Buscar canción..." aria-label="Buscar canción" aria-describedby="button-addon2" value="{{ request.GET.q }}">
+    <form method="GET" action="{% url 'cancion-list' %}" class="form-inline d-flex">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control shadow-sm" placeholder="Buscar canción..." aria-label="Buscar canción" aria-describedby="button-addon2" value="{{ request.GET.q }}">
             <div class="input-group-append">
-                <button class="btn btn-primary" type="submit" id="button-addon2">Buscar</button>
+                <button class="btn btn-primary shadow" type="submit" id="button-addon2">Buscar</button>
             </div>
         </div>
     </form>
+</div>
+<hr>
 {% endblock section %}
 
 {% block maincontent %}
@@ -21,6 +23,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th></th> <!-- Nueva columna para la carátula, sin encabezado -->
                     <th>Título</th>
                     <th>Banda</th>
                     <th>Álbum</th>
@@ -30,7 +33,14 @@
             <tbody>
                 {% for cancion in object_list %}
                     <tr>
-                        <!-- El título de la canción es un enlace que lleva a cancion_detail -->
+                        <!-- Carátula de la canción -->
+                        <td>
+                            {% if cancion.imagen %}
+                                <img src="{{ cancion.imagen.url }}" alt="{{ cancion.titulo }}" class="img-thumbnail" style="width: 50px; height: 50px;">
+                            {% else %}
+                                <img src="{% static 'images/default-cover.jpg' %}" alt="Carátula no disponible" class="img-thumbnail" style="width: 50px; height: 50px;">
+                            {% endif %}
+                        </td>
                         <td>
                             <a href="{% url 'cancion-detail' cancion.id %}">
                                 {{ cancion.titulo }}
@@ -42,7 +52,7 @@
                     </tr>
                 {% empty %}
                     <tr>
-                        <td colspan="4" class="text-center">No se encontraron canciones.</td>
+                        <td colspan="5" class="text-center">No se encontraron canciones.</td>
                     </tr>
                 {% endfor %}
             </tbody>

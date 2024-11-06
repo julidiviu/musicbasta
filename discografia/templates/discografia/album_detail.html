@@ -4,8 +4,7 @@
 
 {% block section %}
 <div class="album-header">
-
-    <h2 class="album-title" style="font-size: 2.5rem;">Detalles del Álbum: {{ album.titulo }}</h2>
+    <h3 class="info-title text-primary font-weight-bold" style="font-size: 2.5em;">Detalles del Álbum: {{ album.titulo }}</h3>
     <hr>
 </div>
 {% endblock section %}
@@ -26,13 +25,26 @@
         
         <div class="album-info-section">
             <div class="info-card">
-                <p><strong>Banda:</strong> <a href="{% url 'banda-detail' album.banda.id %}">{{ album.banda.nombre }}</a></p>
+                <h3 class="info-title font-weight-bold" style="font-size: 2em; display: inline;">Banda:</h3>
+                <a href="{% url 'banda-detail' album.banda.id %}" style="font-size: 2em; display: inline;">{{ album.banda.nombre }}</a>
+                
+                <!-- Estrellas para calificación de la banda -->
+                <div class="stars-rating">
+                    {% for star in "12345" %}
+                        <span class="star" data-value="{{ forloop.counter }}" onclick="highlightStars({{ forloop.counter }})">
+                            <i class="fa fa-star"></i>
+                        </span>
+                    {% endfor %}
+                </div>
+                
                 <p><strong>Fecha de lanzamiento:</strong> {{ album.fecha_lanzamiento }}</p>
                 <hr>
                 
-                <h3 class="info-title">Canciones</h3>
+                <h3 class="info-title font-weight-bold" style="font-size: 2em; display: inline;">Canciones</h3>
+                
                 <ul class="song-list">
                     {% for cancion in album.canciones.all %}
+                        <br>
                         <li class="song-item">
                             <a href="{% url 'cancion-detail' cancion.id %}" class="song-title">{{ cancion.titulo }}</a> - {{ cancion.duracion }}
                         </li>
@@ -42,11 +54,21 @@
                     <br>
                     <a href="{% url 'album-update' album.id %}" class="edit-button">Editar</a>
                     <a href="{% url 'album-delete' album.id %}" class="delete-button">Eliminar</a>
+                    <a href="{% url 'album-list' %}" class="secondary-button">Volver a la lista</a>
                 </ul>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function highlightStars(rating) {
+        const stars = document.querySelectorAll('.star');
+        stars.forEach((star, index) => {
+            star.querySelector('i').style.color = index < rating ? '#FFD700' : 'gray';
+        });
+    }
+</script>
 
 <style>
     .album-detail-container {
@@ -80,15 +102,31 @@
 
     .info-card {
         background: white;
-        padding: 2rem;
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgb(0, 0, 0, 0.1);
+        border: 10px solid rgb(52, 58, 64); /* Borde gris más grueso */
     }
 
-    .album-title {
-        font-size: 1.5rem;
+    .info-title {
+        font-size: 1.8rem;
         font-weight: 600;
         color: #333;
+    }
+
+    .stars-rating {
+        margin-top: 1rem;
+    }
+
+    .star i {
+        font-size: 1.5rem;
+        color: gray;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+
+    .star:hover i {
+        color: #FFD700;
     }
 
     .edit-button,
@@ -99,6 +137,21 @@
         color: white;
         font-weight: bold;
         transition: all 0.3s ease;
+    }
+
+    .secondary-button{
+        padding: 0.5rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        background-color: #444042f1;
+    }
+
+    .secondary-button:hover {
+        background-color: #2b2829f1;
+        color: white;
     }
 
     .edit-button {

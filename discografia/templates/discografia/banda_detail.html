@@ -4,7 +4,7 @@
 
 {% block section %}
 <div class="brand-header">
-    <h3 class="info-title" style="font-size: 2.5rem;">Detalles de la Banda: {{ banda.nombre }}</h3>
+    <h3 class="info-title text-primary font-weight-bold" style="font-size: 2.5em;">Detalles de la Banda: {{ banda.nombre }}</h3>
     <hr>
 </div>
 {% endblock section %}
@@ -54,12 +54,31 @@
                         <li>No hay álbumes para esta banda.</li>
                     {% endfor %}
                 </ul>
+                <br>
+                <br>
+                <a href="{% url 'album-list' %}" class="secondary-button">Volver a la lista</a>
             </div>
         </div>
     </div>
 </div>
 
 <style>
+
+.secondary-button{
+        padding: 0.5rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        background-color: rgb(108, 117, 125);
+    }
+
+    .secondary-button:hover {
+        background-color: #2b2829f1;
+        color: white;
+    }
+
     .band-detail-container {
         max-width: 1200px;
         margin: 0 auto;
@@ -192,7 +211,7 @@
     }
 
     .album-title:hover {
-        color: #e82127;
+        color: rgb(0, 123, 255);
     }
 
     .album-date {
